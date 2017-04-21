@@ -1,0 +1,58 @@
+---
+title: "Rsquared_Vignette"
+author: "Michelle Chua"
+date: "`r Sys.Date()`"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{"Rsquared Vignette"}
+  %\VignetteEncoding{UTF-8}
+---
+## Rsquared Info
+
+The Rsquared package calculates the mean of replicate absorbances, graphs time versus the absorbance mean in log scale, and returns to users the slope of the graph, the R-squared value, and other coefficient values.
+
+## Rsquared Requirements
+
+1) To use the Rsquared package, vectors must be numeric. 
+2) The data should be stored as a data frame.
+3) The Rsquared package calculates means by rows via the rowMeans() function.
+
+## Example using the dietox data frame
+
+An example on how to use Rsquared function and the output is detailed below. To perform the example, the dietox data frame was loaded. This data frame is provided with the the geepack package.
+
+```{r echo=FALSE, warning=FALSE}
+library(ggplot2)
+library(geepack)
+data(dietox)
+library(tidyr)
+
+a <- dietox[, -c(2, 5:7)]
+
+df <- spread(a, Pig, Weight)
+
+Rsquared <- function(x, y, xname, title) {
+  Absorbance <- rowMeans(y)
+  ifelse(Absorbance <= 0 , print("At least one absorbance value <= 0 is in data frame. These values must be excluded for log()."), FALSE) 
+  log10 <- log(Absorbance) 
+  num <- as.numeric(log10) 
+  a <- ggplot() +
+    geom_point(aes(x, num)) + 
+    geom_line(aes(x, num)) + 
+    xlab(deparse(substitute(xname))) + 
+    ylab('log10(Absorbance)') + 
+    ggtitle(deparse(substitute(title))) + 
+    theme(plot.title = element_text(hjust = 0.5)) 
+  print(a) 
+  b <- stats::lm(num ~ x) 
+  if(summary(b)$r.squared < 0.9)
+    warning("R squared is <0.9. May need to reevaluate time frame chosen for log phase. Non-log phase values should be excluded.")
+  summary(b)
+}
+```
+The dietox data frame includes a column with the time (object x). The df also has triplicates of absorbances from 0 to ~71 hours (object y) for two samples, one sample being 2 mM benzoate. Rsquared() will calculate the mean of each row for the columns chosen by the user, ideally exponential phase. The x label can be changed to any name chosen by the user (in this example: object xname = Time(Hours)). Lastly, users can also change the title (object title = 2 mM Benzoate).
+
+The function returns a graph of time versus absorbance means on a log scale and the slope of the graph, the R-squared value, and other coefficient values. The slope can be calculated for any growth curve, and these slopes can be used to compare growth rates of different growth curves.
+```{r echo=TRUE, warning=FALSE}
+Rsquared(df[c(1:14), c(1)], df[c(1:14), c(2:4)], Time, 'Growth Curves Of Pigs In A 3x3 Factorial Experiment')
+```

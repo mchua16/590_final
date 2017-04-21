@@ -1,0 +1,10 @@
+test_that("Rsquared graphs and returns slope and R-squared values", {
+  Time <- c(30)
+  L <- c(10, 11, 12)
+  U <- c(100, 101, 102)
+  C <- c(1000, 1001, 1002)
+test.data <- data.frame(Time, L, U, C)
+library(ggplot2)  
+K <- Rsquared(test.data[, c(1)], test.data[, c(2:4)], Time, 'Test')
+  expect_that(K, is_a("summary.lm"))
+})
