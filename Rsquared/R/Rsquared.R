@@ -18,7 +18,7 @@ Rsquared <- function(x, y, xname, yname, title) { #creates a function assigned a
     geom_point(aes(x, num)) + #plots a scatter plot with x vs. num
     geom_line(aes(x, num)) + #plots a line plot with x vs. num
     xlab(deparse(substitute(xname))) + #lets users change x label to 'xname'
-    ylab(deparse(substitute(yname))) + #changes y label to "log10(Absorbance)"
+    ylab(deparse(substitute(yname))) + #lets users change y label to 'yname'
     ggtitle(deparse(substitute(title))) + #lets users change graph title to 'title'
     theme(plot.title = element_text(hjust = 0.5)) #centers graph title
   print(a) #prints graph
