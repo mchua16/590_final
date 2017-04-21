@@ -4,7 +4,7 @@
 \alias{Rsquared}
 \title{Rsquared Function}
 \usage{
-Rsquared(x, y, xname, title)
+Rsquared(x, y, xname, yname, title)
 }
 \arguments{
 \item{x}{x = time, which can be any unit, but must be numeric}
@@ -12,6 +12,8 @@ Rsquared(x, y, xname, title)
 \item{y}{y = absorbance values in a dataset; must be numeric}
 
 \item{xname}{xname allows users to change the x-axis label; can be character and/or numeric}
+
+\item{yname}{yname allows users to change the y-axis label; can be character and/or numeric}
 
 \item{title}{title allows users to change the graph title; can be character and/or numeric}
 }
