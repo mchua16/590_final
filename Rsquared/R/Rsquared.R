@@ -1,6 +1,6 @@
 #' Rsquared Function
 #'
-#' The Rsquared function calculates the mean of replicate absorbances, graphs time versus the absorbance mean in log scale, and returns to users the slope of the graph, the R-squared value, and other coefficient values.
+#' The Rsquared function calculates the mean of replicate values (e.g. absorbance), graphs time versus the absorbance mean in log scale, and returns to users the slope of the graph, the R-squared value, and other coefficient values.
 #' @param x x = time, which can be any unit, but must be numeric
 #' @param y y = absorbance values in a dataset; must be numeric
 #' @param xname xname allows users to change the x-axis label; can be character and/or numeric
