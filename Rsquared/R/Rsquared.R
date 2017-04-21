@@ -8,6 +8,7 @@
 #' @param title title allows users to change the graph title; can be character and/or numeric
 #' @return graph of time versus absorbance means on a log scale and the slope of the graph, the R-squared value, and other coefficient values.
 #' @keywords absorbance
+#' @export
 
 Rsquared <- function(x, y, xname, yname, title) { #creates a function assigned as Rsquared
   Absorbance <- rowMeans(y) #calculates the mean of all the columns of each row of the dataset
