@@ -18,9 +18,9 @@ Rsquared Requirements
 Example using the benzvandata data frame
 ----------------------------------------
 
-The benzvandata data frame includes a column with the time in hours (object x). The df also has the absorbances (object y) of Sagitulla stellata E-37 under different growth conditions. Rsquared() will calculate the mean of each row for the rows and columns chosen by the user, ideally exponential phase. The x and y labels can be changed to any name chosen by the user (in this example: object xname = Time(Hours), object yname = log(Absorbance)). Lastly, users can also change the title (object title = 4 mM Benzoate or 2 mM Benzoate + 2 mM Vanillate).
+The benzvandata data frame includes a column with the time in hours (object x). The df also has the absorbances (object y) of Sagittula stellata E-37 under different growth conditions. Rsquared() will calculate the mean of each row for the rows and columns chosen by the user, ideally exponential phase. The x and y labels can be changed to any name chosen by the user (in this example: object xname = Time(Hours), object yname = log(Absorbance)). Lastly, users can also change the title (object title = 4 mM Benzoate or 2 mM Benzoate + 2 mM Vanillate).
 
-As the figures below demonstrate, Rsquared returns a graph of time versus absorbance means on a log scale and the slope of the graph, the R-squared value, and other coefficient values. The slope can be calculated for any growth curve, and these slopes can be used to compare growth rates of different growth curves. As the slopes in the output display below, the slope of E-37 grown on 4 mM Benzoate is 0.08333, while the slope of pig replicates 4-6 is 0.137842. Therefore, one could (notwithstanding the lack of statistical analysis) say that WT E-37, on average, grew slower on 4 mM Benzoate than 2 mM Benzoate + 2 mM Vanillate.
+As the figures below demonstrate, Rsquared returns a graph of time versus absorbance means on a log scale and the slope of the graph, the R-squared value, and other coefficient values. The slope can be calculated for any growth curve, and these slopes can be used to compare growth rates of different growth curves. As the slopes in the output display below, the slope of E-37 grown on 4 mM Benzoate is 0.08333 (R-squared = 0.9551), while the slope of E-37 grown on 2 mM Benzoate + 2 mM Vanillate is 0.137842 (R-squared = 0.9914). Therefore, one could (notwithstanding the lack of statistical analysis) say that WT E-37, on average, grew slower on 4 mM Benzoate than on 2 mM Benzoate + 2 mM Vanillate.
 
 ``` r
 df <- read.csv('benzvandata.csv')
@@ -80,7 +80,7 @@ Another example on how to use Rsquared package and its output are detailed below
 
 The dietox data frame includes a column with the time (object x). The df also has several pigs, the weights (object y) of which were taken over time. Again, the x and y labels can be changed to any name chosen by the user (in this example: object xname = Time, object yname = log(Weight)). In this example, object title = Reps 1-3 or Reps 4-6.
 
-Similar to above, Rsquared returned a graph of time versus weight means on a log scale and the slope of the graph, the R-squared value, and other coefficient values. As the slopes in the output display below, the slope of pig replicates 1-3 is 0.123742, while the slope of pig replicates 4-6 is 0.121018. Therefore, it appears that pig reps 1-3, on average, gained weight faster than pig reps 4-6.
+Similar to above, Rsquared returned a graph of time versus weight means on a log scale and the slope of the graph, the R-squared value, and other coefficient values. As the slopes in the output display below, the slope of pig replicates 1-3 is 0.123742 (R-squared = 0.9804), while the slope of pig replicates 4-6 is 0.121018 (R-squared = 0.9813). Therefore, it appears that pig reps 1-3, on average, gained weight faster than pig reps 4-6.
 
 ``` r
 Rsquared(df[c(1:14), c(1)], df[c(1:14), c(2:4)], Time, log(Weight), 'Reps 1-3')
@@ -133,3 +133,9 @@ Rsquared(df[c(1:14), c(1)], df[c(1:14), c(5:7)], Time, log(Weight), 'Reps 4-6')
     ##   (2 observations deleted due to missingness)
     ## Multiple R-squared:  0.9813, Adjusted R-squared:  0.9794 
     ## F-statistic: 523.7 on 1 and 10 DF,  p-value: 5.729e-10
+
+Rsquared Warnings
+-----------------
+
+1.  Absorbance values at or below zero cannot be included because these values cannot be log transformed. If values &lt;= 0 are in the data frame, the Rsquared package will return a warning.
+2.  If the Multiple R-squared value is less than 0.90, the Rsquared package will return a warning. Users may need to provide the Rsquared package with new values from the dataset to determine if the exponential phase was indeed selected.
